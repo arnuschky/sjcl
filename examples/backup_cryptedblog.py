@@ -177,8 +177,7 @@ class Cryptedblog():
 
 if __name__ == "__main__":
     cr = Cryptedblog(
-        server="http://localhost:8080",
-#        server="http://www.cryptedblog.com",
+        server="http://www.cryptedblog.com",
         blog="test-blog",
         shared_secret="YourSharedSecret",
     )
