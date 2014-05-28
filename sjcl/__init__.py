@@ -4,6 +4,6 @@
 from sjcl import SJCL
 
 __author__ = "Ulf Bartel <ulf.bartel@gmail.com>"
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 __copyright__ = "Copyright (c) 2014 Ulf Bartel"
 __license__ = "New-style BSD"
