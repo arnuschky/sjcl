@@ -16,6 +16,6 @@ Typical usage often looks like this:
 
     cyphertext = SJCL().encrypt("secret message to encrypt", "shared_secret")
 
-    print cyphertext
-    print SJCL().decrypt(cyphertext, "shared_secret")
+    print(cyphertext)
+    print(SJCL().decrypt(cyphertext, "shared_secret"))
 

@@ -54,7 +54,7 @@ import base64
 
 def truncate_iv(iv, ol, tlen):  # ol and tlen in bits
     ivl = len(iv)  # iv length in bytes
-    ol = (ol - tlen) / 8
+    ol = int((ol - tlen) / 8)
 
     # "compute the length of the length" (see ccm.js)
     L = 2
@@ -105,7 +105,7 @@ class SJCL():
 
         salt = base64.b64decode(data["salt"])
 
-    #    print "salt", hex_string(salt)
+    #    print("salt", hex_string(salt))
         if len(salt) != self.salt_size:
             raise Exception("salt should be %d bytes long" % self.salt_size)
 
@@ -120,24 +120,24 @@ class SJCL():
             dkLen=dkLen,
             prf=self.prf
         )
-#        print "key", hex_string(key)
+#        print("key", hex_string(key))
 
         ciphertext = base64.b64decode(data["ct"])
         iv = base64.b64decode(data["iv"])
-#        print AES.block_size
+#        print(AES.block_size)
 
         nonce = truncate_iv(iv, len(ciphertext)*8, data["ts"])
 
         # split tag from ciphertext (tag was simply appended to ciphertext)
         mac = ciphertext[-(data["ts"]//8):]
-#        print len(ciphertext)
+#        print(len(ciphertext))
         ciphertext = ciphertext[:-(data["ts"]//8)]
-#        print len(ciphertext)
-#        print len(tag)
+#        print(len(ciphertext))
+#        print(len(tag))
 
-#        print "len", len(nonce)
+#        print("len", len(nonce))
         cipher = AES.new(key, AES.MODE_CCM, nonce, mac_len=self.mac_size)
-        plaintext = cipher.decrypt(ciphertext)
+        plaintext = cipher.decrypt(ciphertext).decode("utf-8")
 
         cipher.verify(mac)
 
@@ -155,7 +155,7 @@ class SJCL():
 
         # TODO plaintext padding?
         nonce = truncate_iv(iv, len(plaintext) * 8, self.tag_size * 8)
-    #    print len(nonce)
+#        print(len(nonce))
 
         cipher = AES.new(
             key,
@@ -164,7 +164,7 @@ class SJCL():
             mac_len=self.mac_size
         )
 
-        ciphertext = cipher.encrypt(plaintext)
+        ciphertext = cipher.encrypt(plaintext.encode("utf-8"))
         mac = cipher.digest()
 
         ciphertext = ciphertext + mac

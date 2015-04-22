@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from sjcl import SJCL
+from __future__ import absolute_import
+from .sjcl import SJCL
 
 __author__ = "Ulf Bartel <ulf.bartel@gmail.com>"
 __version__ = "0.1.3"
